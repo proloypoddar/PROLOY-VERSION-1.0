@@ -6,6 +6,9 @@ import wikipedia
 import webbrowser
 import os
 import random
+import pyautogui
+import time
+import pyjokes
 # import wolframalpha
 # try:
 #     app=wolframalpha.client("6RHU88-P9LTQV83WW")
@@ -27,7 +30,7 @@ def wishMe():
         speak("GOOD AFTERNOON ! ")  
     else:
         speak("GOOD EVENING !")    
-    speak("I am Prox version 1.0 Sir. please tell me how can i help you")    
+    speak(" please tell me how can i help you")    
 def takecommand():
     #it take microphone input from user and return  outpur
              
@@ -61,14 +64,15 @@ if __name__=="__main__":
          elif "open youtube" in query:
              speak("opening youtube sir") 
              webbrowser.open("https://www.youtube.com/")
-             
+         elif "who are you?" in query:
+             speak("I am Prox version 1.0 Sir." )   
          elif "open Google" in query:
              speak("opening sir") 
              webbrowser.open("https://www.google.com/")
              
          elif "open my facebook profile" in query:
              speak("opening facebook sir") 
-             webbrowser.open("https://www.facebook.com/babukhychoo")
+             webbrowser.open("https://www.facebook.com/ogotumikgo")
                   
          elif "open stackoverflow" in query:
              speak("opening sir")
@@ -80,6 +84,15 @@ if __name__=="__main__":
              songs=random.choice(music)
              print(songs)
              os.startfile(os.path.join(music_dir,songs))
+         elif "volume up" in query:
+             speak("volume up sir")    
+             pyautogui.hotkey("volumeup")
+         elif "volume down" in query:
+             speak("volume down sir")    
+             pyautogui.hotkey("volumedown")             
+         elif "stop music " in query :
+             speak("ok sir")     
+             pyautogui.press("space")
          elif " the time" in query:
              strTime=datetime.datetime.now().strftime("%H : %M: %S")
              speak(f"sir, the time is{strTime}")
@@ -96,9 +109,15 @@ if __name__=="__main__":
         #      speak(" BRAC UNIVERSITY SIR..!")    
          elif " study time" in query:
              speak("should i open bux sir ?")
+             time.sleep(100)
+             
              if "yes" in query:
                  speak("study time , opening BUX sir!")
                  webbrowser.open_new_tab("https://bux.bracu.ac.bd/dashboard")
+
              else:
                  print(None)       
+         elif " joke " in query:
+             My_joke = pyjokes.get_joke(language="en", category="all")
+             speak(My_joke)
 
