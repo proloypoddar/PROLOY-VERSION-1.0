@@ -9,11 +9,11 @@ import random
 import pyautogui
 import time
 import pyjokes
-# import wolframalpha
-# try:
-#     app=wolframalpha.client("6RHU88-P9LTQV83WW")
-# except Exception:
-#     print("some feature are not work")    
+import wolframalpha
+try:
+    app=wolframalpha.Client("6RHU88-P9LTQV83WW")
+except Exception:
+    print("error") 
 
 engine=pyttsx3.init("sapi5")
 voices=engine.getProperty("voices")
@@ -49,9 +49,8 @@ def takecommand():
         print("Say that again please....")   
         return "None"  
     return query    
-  
-    
 if __name__=="__main__":
+
     wishMe()   
     while True:
          query=takecommand().lower()
@@ -62,14 +61,20 @@ if __name__=="__main__":
              speak("According to Wikipedia ")
              speak(results)
          elif "open youtube" in query:
-             speak("opening youtube sir") 
-             webbrowser.open("https://www.youtube.com/")
-         elif "who are you?" in query:
+             speak("opening youtube sir, what you want to seach on youtube") 
+             s=takecommand()
+             webbrowser.open("www.youtube.com/results?search_query=" + s + "")
+         elif "are you" in query:
              speak("I am Prox version 1.0 Sir." )   
-         elif "open Google" in query:
+         elif "open google" in query:
              speak("opening sir") 
              webbrowser.open("https://www.google.com/")
-             
+         elif "search" in query:
+             speak("what should i search sir? ")
+             s=takecommand()
+             pyautogui.write(s)
+             time.sleep(3)
+             pyautogui.press("enter")    
          elif "open my facebook profile" in query:
              speak("opening facebook sir") 
              webbrowser.open("https://www.facebook.com/ogotumikgo")
@@ -109,15 +114,32 @@ if __name__=="__main__":
         #      speak(" BRAC UNIVERSITY SIR..!")    
          elif " study time" in query:
              speak("should i open bux sir ?")
-             time.sleep(100)
-             
-             if "yes" in query:
+             time.sleep(1)
+             s= takecommand()
+             s=str(s)
+             if s =="yes":
                  speak("study time , opening BUX sir!")
                  webbrowser.open_new_tab("https://bux.bracu.ac.bd/dashboard")
-
+                 time.sleep(3)
+             elif s=="no":
+                 speak("ok sir! but you need to study")
              else:
                  print(None)       
-         elif " joke " in query:
+         elif "joke" in query:
              My_joke = pyjokes.get_joke(language="en", category="all")
              speak(My_joke)
+         elif "tempature"or "weather" in query:
+             try:
+                 res= app.query(query)
+                 print(next(res.results).text)
+                 speak(next(res.results).text)
+             except:
+                print("net error")
 
+         else:
+             try:
+                 res= app.query(query)
+                 print(next(res.results).text)
+                 speak(next(res.results).text)
+             except:
+                 print("net error")                
