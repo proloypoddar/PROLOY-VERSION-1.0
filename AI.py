@@ -1,4 +1,4 @@
-from typing import MutableSequence
+
 import pyttsx3
 import datetime
 import speech_recognition as sr
@@ -10,6 +10,8 @@ import pyautogui
 import time
 import pyjokes
 import wolframalpha
+hlw=["hello","hi","hello there","hey","hey wassup","baby","hi honey","babu","sona","pakhi"]
+hru=["how are you","how are you doing","whats going on","whats up","wassup","hru","what about you",""]
 try:
     app=wolframalpha.Client("6RHU88-P9LTQV83WW")
 except Exception:
@@ -18,7 +20,7 @@ except Exception:
 engine=pyttsx3.init("sapi5")
 voices=engine.getProperty("voices")
 #print(voices[0].id)
-engine.setProperty("voice",voices[0].id)
+engine.setProperty("voice",voices[1].id)
 def speak(audio):
     engine.say(audio)
     engine.runAndWait()
@@ -48,9 +50,9 @@ def takecommand():
         # print(e)
         print("Say that again please....")   
         return "None"  
-    return query    
-if __name__=="__main__":
+    return query  
 
+def main():
     wishMe()   
     while True:
          query=takecommand().lower()
@@ -60,21 +62,28 @@ if __name__=="__main__":
              results=wikipedia.summary(query,sentences=3)
              speak("According to Wikipedia ")
              speak(results)
+             break
+         elif "bye" in query:
+             speak("see you soon sir!")
+             break             
          elif "open youtube" in query:
              speak("opening youtube sir, what you want to seach on youtube") 
              s=takecommand()
              webbrowser.open("www.youtube.com/results?search_query=" + s + "")
+             break
          elif "are you" in query:
              speak("I am Prox version 1.0 Sir." )   
          elif "open google" in query:
              speak("opening sir") 
              webbrowser.open("https://www.google.com/")
+             break
          elif "search" in query:
              speak("what should i search sir? ")
              s=takecommand()
              pyautogui.write(s)
              time.sleep(3)
-             pyautogui.press("enter")    
+             pyautogui.press("enter") 
+             break   
          elif "open my facebook profile" in query:
              speak("opening facebook sir") 
              webbrowser.open("https://www.facebook.com/ogotumikgo")
@@ -82,40 +91,47 @@ if __name__=="__main__":
          elif "open stackoverflow" in query:
              speak("opening sir")
              webbrowser.open("stackoverflow.com")
+             break
          elif "play music" in query:
              speak("playing  sir")
-             music_dir="F:\\audios"
+             music_dir= "E:\\new\\MY CHOICE"
              music= os.listdir(music_dir)
              songs=random.choice(music)
              print(songs)
+             break
              os.startfile(os.path.join(music_dir,songs))
          elif "volume up" in query:
              speak("volume up sir")    
              pyautogui.hotkey("volumeup")
          elif "volume down" in query:
              speak("volume down sir")    
-             pyautogui.hotkey("volumedown")             
+             pyautogui.hotkey("volumedown") 
+             break            
          elif "stop music " in query :
              speak("ok sir")     
              pyautogui.press("space")
+             break
          elif " the time" in query:
              strTime=datetime.datetime.now().strftime("%H : %M: %S")
              speak(f"sir, the time is{strTime}")
+             break
          elif "open vs code" in query:
              vs="C:\\Users\\PROLOY\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
              speak("opening sir")
              os.startfile(vs)  
+             break
          elif "who is sadu"in query:
              speak(" your girlfriend ")
+             break
          elif "open github" in query:
              speak("opening sir")  
              webbrowser.open("https://github.com/proloypoddar?tab=repositories")
-        #  elif "University name " or "study" in query:
-        #      speak(" BRAC UNIVERSITY SIR..!")    
-         elif " study time" in query:
+
+         elif "study time" in query:
              speak("should i open bux sir ?")
-             time.sleep(1)
-             s= takecommand()
+             time.sleep(3)
+             s= takecommand().lower()
+             print(s)
              s=str(s)
              if s =="yes":
                  speak("study time , opening BUX sir!")
@@ -128,6 +144,7 @@ if __name__=="__main__":
          elif "joke" in query:
              My_joke = pyjokes.get_joke(language="en", category="all")
              speak(My_joke)
+             break
          elif "tempature"or "weather" in query:
              try:
                  res= app.query(query)
@@ -135,11 +152,23 @@ if __name__=="__main__":
                  speak(next(res.results).text)
              except:
                 print("net error")
-
          else:
              try:
                  res= app.query(query)
                  print(next(res.results).text)
                  speak(next(res.results).text)
+                 break
              except:
-                 print("net error")                
+                 print("net error")  
+                 break  
+                        
+    proloy() 
+def proloy():
+    while True:
+        query=takecommand().lower()
+        if "prox"in query:
+            print(query)
+            break
+    main() 
+if __name__=="__main__":
+    proloy()
